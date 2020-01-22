@@ -1,0 +1,26 @@
+# $ docker-compose up -d
+version: '3'
+
+services:
+  # Database
+  mysql:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: wordpress
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+
+  # Wordpress
+  wordpress:
+    image: wordpress
+    depends_on:
+      - mysql
+    links:
+      - mysql:mysql
+    ports:
+      - 8080:80
+    restart: always
+    environment:
+      WORDPRESS_DB_PASSWORD: wordpress
